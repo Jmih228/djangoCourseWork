@@ -4,17 +4,17 @@ from mailing.models import Mail
 
 
 def daily_func():
-    mailings: QuerySet = Mail.objects.filter(status='enabled', send_frequency='daily')
+    mailings: QuerySet = Mail.objects.filter(status='started', send_frequency='daily')
     print(mailings)
 
 
 def weekly_func():
-    mailings: QuerySet = Mail.objects.filter(status='enabled', send_frequency='weekly')
+    mailings: QuerySet = Mail.objects.filter(status='started', send_frequency='weekly')
     print(mailings)
 
 
 def monthly_func():
-    mailings: QuerySet = Mail.objects.filter(status='enabled', send_frequency='monthly')
+    mailings: QuerySet = Mail.objects.filter(status='started', send_frequency='monthly')
     print(mailings)
 
 
