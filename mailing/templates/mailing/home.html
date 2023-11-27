@@ -9,36 +9,19 @@
                     <div class="card mb-4 box-shadow">
                         <div class="card-header">
                             <h4 class="my-0 font-weight-normal">{{ object }}</h4>
-                        </div>
-                        <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$ 140</h1>
-                            <li>{{ object.description|truncatechars:100 }}</li>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group">
-                                <a href="{% url 'mailing:view' object.pk %}"
-                                   class="btn btn-sm btn-outline-secondary">view</a>
-                                {% if request.user.id == object.user_id %}
-                                    <a href="{% url 'mailing:edit' object.pk %}"
-                                       class="btn btn-sm btn-outline-secondary">edit</a>
-                                    <a href="{% url 'mailing:delete' object.pk %}"
-                                       class="btn btn-sm btn-outline-danger">delete</a>
-                                {% else %}
-                                    <a href="{% url 'mailing:view' object.pk %}"
-                                       class="btn btn-sm btn-outline-secondary">edit</a>
-                                    <a href="{% url 'mailing:view' object.pk %}"
-                                       class="btn btn-sm btn-outline-danger">delete</a>
-                                {% endif %}
-                            </div>
+                            <a href="{% url 'blog:blog_post_detail_view' object.pk %}"
+                               class="btn btn-sm btn-outline-secondary">Читать пост</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
-        </div>
-        <div class="col-2">
-            <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:create_mailing' %}">
-                Добавить рассылку
-            </a>
+            <div class="col-3">
+                <div class="card-body">
+                    <p class="text">Общее количество рассылок {{ mailings_quantity }}</p>
+                    <p class="text">Количество активных рассылок {{ active_mailings }}</p>
+                    <p class="text">Количество уникальных клиентов для рассылок {{ clients }}</p>
+                </div>
+            </div>
         </div>
     </div>
 

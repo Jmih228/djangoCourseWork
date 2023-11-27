@@ -4,10 +4,11 @@ from mailing.forms import MailingForm, MessageForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class MailingListVeiw(ListView):
     model = Mail
-    template_name = 'mailing/home.html'
-    extra_context = {'title': 'Главная'}
+    template_name = 'mailing/mail_list.html'
+    extra_context = {'title': 'Список рассылок'}
 
 
 class MailCreateView(LoginRequiredMixin, CreateView):
