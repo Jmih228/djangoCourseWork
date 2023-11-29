@@ -22,7 +22,7 @@ def verification(request, user):
         'token': token_generator.make_token(user)
     }
     message = render_to_string(
-        'user/email_verification.html',
+        'users/email_verification.html',
         context=context
     )
     send_mail(

@@ -13,6 +13,7 @@ class Mail(models.Model):
         ('created', 'Создана'),
         ('started', 'Запущена'),
         ('completed', 'Завершена'),
+        ('blocked', 'Заблокирована')
     )
     title = models.CharField(max_length=100, verbose_name='Название рассылки')
     start_date = models.DateTimeField(verbose_name="Дата начала рассылки", null=True, blank=True)

@@ -9,5 +9,6 @@ urlpatterns = [
     path('create/', MailCreateView.as_view(), name='create_mailing'),
     path('view/<int:pk>', MailDetailView.as_view(), name='view'),
     path('update/<int:pk>', MailUpdateView.as_view(), name='edit'),
-    path('delete/<int:pk>', MailDeleteView.as_view(), name='delete')
+    path('delete/<int:pk>', MailDeleteView.as_view(), name='delete'),
+    path('change_status/<int:pk>', change_status, name='change_status')
 ]

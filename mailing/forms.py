@@ -6,7 +6,7 @@ class MailingForm(forms.ModelForm):
 
     class Meta:
         model = Mail
-        exclude = ('user',)
+        exclude = ('user', 'status',)
 
 
 class MessageForm(forms.ModelForm):

@@ -16,6 +16,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangoCourseWork.settings')
 
 application = get_wsgi_application()
 
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(main, 'interval', seconds=2)
-# scheduler.start()
+scheduler = BackgroundScheduler()
+scheduler.add_job(main, 'interval', seconds=2)
+scheduler.start()

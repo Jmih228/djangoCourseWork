@@ -9,9 +9,11 @@ from logs.models import Logs
 
 
 def daily_func():
+    # status = ''
+    # mail_exeption = ''
     mailings_queryset = Mail.objects.prefetch_related('clients').filter(status='started', send_frequency='daily')
     for mail in mailings_queryset:
-        message = Message.objects.filter(mail_id=mail.id)
+        message = Message.objects.filter(mail_id=mail.id)[0]
         try:
             send_mail(
                 subject=message.subject,
@@ -21,23 +23,26 @@ def daily_func():
                 fail_silently=False
             )
             mail.start_date = mail.start_date + timedelta(days=1)
+            mail.end_date = mail.end_date + timedelta(days=1)
             mail.status = 'completed'
             mail.save()
             status = 'Успешно'
+            answer = ''
         except smtplib.SMTPException as mail_exeption:
             status = 'Ошибка'
+            answer = str(mail_exeption)
         finally:
             Logs.objects.create(
                 last_mailing_time=mail.start_date,
                 mail_status=status,
-                mailmail_server_answering=str(mail_exeption),
+                mail_server_answer=answer,
             )
 
 
 def weekly_func():
     mailings_queryset = Mail.objects.prefetch_related('clients').filter(status='started', send_frequency='weekly')
     for mail in mailings_queryset:
-        message = Message.objects.filter(mail_id=mail.id)
+        message = Message.objects.filter(mail_id=mail.id)[0]
         try:
             send_mail(
                 subject=message.subject,
@@ -47,23 +52,26 @@ def weekly_func():
                 fail_silently=False
             )
             mail.start_date = mail.start_date + timedelta(days=7)
+            mail.end_date = mail.end_date + timedelta(days=7)
             mail.status = 'completed'
             mail.save()
             status = 'Успешно'
+            answer = ''
         except smtplib.SMTPException as mail_exeption:
             status = 'Ошибка'
+            answer = str(mail_exeption)
         finally:
             Logs.objects.create(
                 last_mailing_time=mail.start_date,
                 mail_status=status,
-                mailmail_server_answering=str(mail_exeption),
+                mailmail_server_answering=answer,
             )
 
 
 def monthly_func():
     mailings_queryset = Mail.objects.prefetch_related('clients').filter(status='started', send_frequency='monthly')
     for mail in mailings_queryset:
-        message = Message.objects.filter(mail_id=mail.id)
+        message = Message.objects.filter(mail_id=mail.id)[0]
         try:
             send_mail(
                 subject=message.subject,
@@ -74,20 +82,24 @@ def monthly_func():
             )
             days = monthrange(mail.start_date.year, mail.end_date.month)[1]
             mail.start_date = mail.start_date + timedelta(days)
+            mail.end_date = mail.end_date + timedelta(days)
             mail.status = 'completed'
             mail.save()
             status = 'Успешно'
+            answer = ''
         except smtplib.SMTPException as mail_exeption:
             status = 'Ошибка'
+            answer = str(mail_exeption)
         finally:
             Logs.objects.create(
                 last_mailing_time=mail.start_date,
                 mail_status=status,
-                mailmail_server_answering=str(mail_exeption),
+                mailmail_server_answering=answer,
             )
 
 
 def main():
+
     now = datetime.now().replace(tzinfo=pytz.UTC)
 
     mailings_query = Mail.objects.all()
