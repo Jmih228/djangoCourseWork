@@ -25,6 +25,8 @@ class BlogPostView(ListView):
                 cache.set(key, mailings)
             else:
                 mailings = Mail.objects.all()
+        else:
+            mailings = Mail.objects.all()
 
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Главная'
