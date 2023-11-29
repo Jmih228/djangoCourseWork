@@ -12,7 +12,7 @@ class BlogPostView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.order_by('?')[:2]
+        queryset = queryset.order_by('?')[:3]
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -23,8 +23,8 @@ class BlogPostView(ListView):
             if cache_data is None:
                 mailings = Mail.objects.all()
                 cache.set(key, mailings)
-        else:
-            mailings = Mail.objects.all()
+            else:
+                mailings = Mail.objects.all()
 
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = 'Главная'
