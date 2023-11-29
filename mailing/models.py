@@ -34,3 +34,10 @@ class Message(models.Model):
     subject = models.CharField(max_length=255, verbose_name='тема')
     body = models.TextField(verbose_name='сообщение')
     mail = models.ForeignKey(Mail, on_delete=models.CASCADE, verbose_name='рассылка')
+
+    def __str__(self):
+        return self.subject
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
