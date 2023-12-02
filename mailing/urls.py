@@ -10,5 +10,6 @@ urlpatterns = [
     path('view/<int:pk>', MailDetailView.as_view(), name='view'),
     path('update/<int:pk>', MailUpdateView.as_view(), name='edit'),
     path('delete/<int:pk>', MailDeleteView.as_view(), name='delete'),
-    path('change_status/<int:pk>', change_status, name='change_status')
+    path('change_status/<int:pk>', change_status, name='change_status'),
+    path('create_mail_message/', MessageCreateView.as_view(), name='message_create')
 ]

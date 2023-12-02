@@ -1,6 +1,7 @@
 from django.db import models
 from djangoCourseWork import settings
 from clients.models import Client
+import datetime
 
 class Mail(models.Model):
 
@@ -22,6 +23,7 @@ class Mail(models.Model):
     send_frequency = models.CharField(max_length=10, choices=SEND_CHOICES, verbose_name="Частота рассылки")
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='created', verbose_name="Статус рассылки")
     clients = models.ManyToManyField(Client, verbose_name="Клиенты", related_name="mailings")
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE,
                              verbose_name="Пользователь")
 
@@ -33,7 +35,7 @@ class Message(models.Model):
 
     subject = models.CharField(max_length=255, verbose_name='тема')
     body = models.TextField(verbose_name='сообщение')
-    mail = models.ForeignKey(Mail, on_delete=models.CASCADE, verbose_name='рассылка')
+    mail = models.ForeignKey(Mail, on_delete=models.CASCADE, null=True, blank=True, verbose_name='рассылка')
 
     def __str__(self):
         return self.subject
