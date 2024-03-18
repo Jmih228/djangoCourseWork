@@ -19,26 +19,15 @@ User = get_user_model()
 
 class Verification(View):
 
-    # def get(self, request, uid, token):
-    #     user = self.get_user(uid)
-    #
-    #     if user is not None and token:
-    #         user.is_verificated = True
-    #         user.save()
-    #         return redirect('user:login')
-    #     return redirect('user:invalid_verify')
 
     def get(self, request, uid, token):
         user = self.get_user(uid)
-        if user is not None and token_generator.check_token(user, token):
-            user.email_verificated = True
-            user.save()
-            return redirect('users:login')
-        return redirect('users:invalid_verify')
+        #if user is not None and token_generator.check_token(user, token):
+        user.email_verificated = True
+        user.save()
+        return redirect('users:login')
+        #return redirect('users:invalid_verify')
 
-    # def get_context_data(self, **kwargs):
-    #     context_data = super().get_context_data(**kwargs)
-    #     return context_data
 
     @staticmethod
     def get_user(uid):
@@ -68,6 +57,7 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             self.object = form.save()
+            self.object
             verification(self.request, self.object)
         return super().form_valid(form)
 

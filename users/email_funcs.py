@@ -21,10 +21,13 @@ def verification(request, user):
         'uid': urlsafe_base64_encode(force_bytes(user.id)),
         'token': token_generator.make_token(user)
     }
+    print(context['token'])
+    print(token_generator.check_token(user, context['token']))
     message = render_to_string(
         'users/email_verification.html',
         context=context
     )
+    print(message)
     send_mail(
         subject='Подтверждение почты',
         message=message,
