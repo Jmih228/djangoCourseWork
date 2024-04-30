@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.auth import logout, get_user_model
 from users.models import CustomUser
 from django.views.generic import CreateView, UpdateView
@@ -7,7 +7,7 @@ from users.forms import UserRegisterForm, UserProfileForm, UserAuthenticationFor
 from django.urls import reverse_lazy, reverse
 from string import ascii_letters as letters, digits
 from random import sample
-from users.email_funcs import _send_mail_password, verification
+from users.email_funcs import _send_mail_password
 from django.utils.http import urlsafe_base64_decode
 from django.core.exceptions import ValidationError
 from django.contrib.auth.tokens import default_token_generator as token_generator
@@ -22,11 +22,12 @@ class Verification(View):
 
     def get(self, request, uid, token):
         user = self.get_user(uid)
-        #if user is not None and token_generator.check_token(user, token):
-        user.email_verificated = True
-        user.save()
-        return redirect('users:login')
-        #return redirect('users:invalid_verify')
+
+        if token_generator.check_token(user, token):
+            user.email_verificated = True
+            user.save()
+            return redirect('users:login')
+        return redirect('users:invalid_verify')
 
 
     @staticmethod
@@ -52,13 +53,11 @@ class RegisterView(CreateView):
     model = CustomUser
     form_class = UserRegisterForm
     template_name = 'users/register.html'
-    success_url = reverse_lazy('users:confirm_email')
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         if form.is_valid():
-            self.object = form.save()
-            self.object
-            verification(self.request, self.object)
+            form.save()
         return super().form_valid(form)
 
 

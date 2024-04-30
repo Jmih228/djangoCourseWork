@@ -27,7 +27,6 @@ class UserAuthenticationForm(AuthenticationForm):
                 password=password
             )
             if not self.user_cache.email_verificated:
-                print(self.user_cache)
                 verification(self.request, self.user_cache)
                 raise ValidationError(
                     'Подтвердите почту чтобы войти в аккаунт',
